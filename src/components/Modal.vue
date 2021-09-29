@@ -22,13 +22,13 @@
                 <div>
                     <span>Начальник</span>
                     <el-select
-                        v-model="parentSelect"
+                        v-model="headSelect"
                         clearable>
                         <el-option
                             v-for="user in users"
-                                :key="user.name"
+                                :key="user.id"
                                 :label="user.name"
-                                :value="user.name">
+                                :value="user.id">
                         </el-option>
                     </el-select>
                 </div>
@@ -49,13 +49,21 @@ export default {
         showModal: false,
         nameInput: '',
         numberInput: '',
-        parentSelect: ''
+        headSelect: ''
       };
     },
     methods: {
         close() {
+            if (!this.nameInput.trim() || !this.numberInput.trim()) {
+                alert('Заполните имя и номер!');
+                return;
+            }
             this.showModal = false;
-            this.$emit('save-user', {name: this.nameInput, number: this.numberInput});
+            const id = this.users.length + 1;
+            this.$emit('save-user', {id: id, headId: this.headSelect, name: this.nameInput, number: this.numberInput});
+            this.nameInput = '';
+            this.numberInput = '';
+            this.headSelect = '';
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <Table :users='this.users'/>
     <Modal :users='this.users' @save-user='updateTable($event)'/>
   </div>
@@ -17,24 +17,25 @@ export default {
   },
   data() {
     return {
-      users: []
+      users: JSON.parse(localStorage.getItem('users')) || []
     }
   },
   methods: {
     updateTable($event) {
       this.users.push($event);
+      localStorage.setItem('users', JSON.stringify(this.users));
     }
   }
 }
 </script>
 
 <style>
-/* #app {
+.app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-} */
+}
 </style>
